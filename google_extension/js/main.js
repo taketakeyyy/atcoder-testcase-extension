@@ -27,9 +27,20 @@ $(function () {
     function getFileName(testCaseName, ext) {
         let inFile = testCaseName;
         let outFile = testCaseName;
-        if (testCaseName.indexOf(".txt") === -1 && ext !== 'none') {
-            inFile += ext === '' ? ".in" : '.' + ext;
-            outFile += ext === '' ? ".out" : '.' + ext;
+        if(ext === 'none') {
+            // ARC096など。拡張子はなし。
+            ;
+        }
+        else if (ext === '' && testCaseName.indexOf(".txt") === -1) {
+            // ARC085の拡張子は.in, ABC140は拡張子はなし。見分けがつかないので、.inのケースのみ個別対応
+            if (contestName === 'arc085') {
+                inFile += '.in';
+                outFile += '.out';
+            }
+        }
+        else if (ext === '' && testCaseName.indexOf(".txt") !== -1) {
+            // ABC161など。拡張子は既に入っている
+            ;
         }
         return {in: inFile, out: outFile};
     }
